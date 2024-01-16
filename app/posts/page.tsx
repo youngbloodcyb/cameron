@@ -4,11 +4,15 @@ import { compareDesc } from "date-fns";
 
 function PostCard(post: Post) {
   return (
-    <div>
-      <h2>
-        <Link href={post.url}>{post.title}</Link>
-      </h2>
-    </div>
+    <main className="">
+      <section className="flex flex-col container divide-y">
+        <div>
+          <h2>
+            <Link href={post.url}>{post.title}</Link>
+          </h2>
+        </div>
+      </section>
+    </main>
   );
 }
 
