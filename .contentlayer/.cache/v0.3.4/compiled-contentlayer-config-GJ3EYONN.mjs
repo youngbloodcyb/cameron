@@ -1,5 +1,8 @@
 // contentlayer.config.ts
-import { defineDocumentType, makeSource } from "contentlayer/source-files";
+import {
+  defineDocumentType,
+  makeSource
+} from "contentlayer/source-files";
 var Post = defineDocumentType(() => ({
   name: "Post",
   filePathPattern: `**/*.mdx`,
@@ -7,12 +10,13 @@ var Post = defineDocumentType(() => ({
   fields: {
     title: {
       type: "string",
-      description: "The title of the post",
       required: true
+    },
+    description: {
+      type: "string"
     },
     date: {
       type: "date",
-      description: "The date of the post",
       required: true
     }
   },
@@ -28,6 +32,7 @@ var contentlayer_config_default = makeSource({
   documentTypes: [Post]
 });
 export {
+  Post,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-JDHNI3PH.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-GJ3EYONN.mjs.map

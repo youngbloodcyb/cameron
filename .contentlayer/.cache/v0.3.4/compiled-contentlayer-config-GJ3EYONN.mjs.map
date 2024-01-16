@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../contentlayer.config.ts"],
+  "sourcesContent": ["import {\n  defineDocumentType,\n  makeSource,\n  ComputedFields,\n} from \"contentlayer/source-files\";\n\nexport const Post = defineDocumentType(() => ({\n  name: \"Post\",\n  filePathPattern: `**/*.mdx`,\n  contentType: \"mdx\",\n  fields: {\n    title: {\n      type: \"string\",\n      required: true,\n    },\n    description: {\n      type: \"string\",\n    },\n    date: {\n      type: \"date\",\n      required: true,\n    },\n  },\n  computedFields: {\n    url: {\n      type: \"string\",\n      resolve: (doc) => `/posts/${doc._raw.flattenedPath}`,\n    },\n  },\n}));\n\nexport default makeSource({\n  contentDirPath: \"posts\",\n  documentTypes: [Post],\n});\n"],
+  "mappings": ";AAAA;AAAA,EACE;AAAA,EACA;AAAA,OAEK;AAEA,IAAM,OAAO,mBAAmB,OAAO;AAAA,EAC5C,MAAM;AAAA,EACN,iBAAiB;AAAA,EACjB,aAAa;AAAA,EACb,QAAQ;AAAA,IACN,OAAO;AAAA,MACL,MAAM;AAAA,MACN,UAAU;AAAA,IACZ;AAAA,IACA,aAAa;AAAA,MACX,MAAM;AAAA,IACR;AAAA,IACA,MAAM;AAAA,MACJ,MAAM;AAAA,MACN,UAAU;AAAA,IACZ;AAAA,EACF;AAAA,EACA,gBAAgB;AAAA,IACd,KAAK;AAAA,MACH,MAAM;AAAA,MACN,SAAS,CAAC,QAAQ,UAAU,IAAI,KAAK,aAAa;AAAA,IACpD;AAAA,EACF;AACF,EAAE;AAEF,IAAO,8BAAQ,WAAW;AAAA,EACxB,gBAAgB;AAAA,EAChB,eAAe,CAAC,IAAI;AACtB,CAAC;",
+  "names": []
+}

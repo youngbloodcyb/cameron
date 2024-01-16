@@ -1,6 +1,14 @@
+import { notFound } from "next/navigation";
 import { allPosts } from "contentlayer/generated";
-import { getMDXComponent } from "next-contentlayer/hooks";
-import { format, parseISO } from "date-fns";
+
+import { Metadata } from "next";
+import { Mdx } from "@/components/mdx-components";
+
+interface PostProps {
+  params: {
+    slug: string[];
+  };
+}
 
 export const generateStaticParams = async () =>
   allPosts.map((post: any) => ({ slug: post._raw.flattenedPath }));
@@ -9,29 +17,23 @@ export const generateMetadata = ({ params }: any) => {
   const post = allPosts.find(
     (post: any) => post._raw.flattenedPath === params.slug
   );
-  return { title: post?.title };
+  return { title: post?.title, description: post?.description };
 };
 
-const PostLayout = ({ params }: { params: { slug: string } }) => {
-  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
-
-  let MDXContent;
+export default async function PostPage({ params }: PostProps) {
+  const post = allPosts.find(
+    (post: any) => post._raw.flattenedPath === params.slug
+  );
 
   if (!post) {
-    return <div>404</div>;
-  } else {
-    MDXContent = getMDXComponent(post!.body.code);
+    notFound();
   }
 
   return (
-    <div>
-      <h1>{post.title}</h1>
-      <p>{format(parseISO(post.date), "LLLL d, yyyy")}</p>
-      <article className="prose prose-slate">
-        <MDXContent />
-      </article>
-    </div>
+    <article className="py-6 prose dark:prose-invert">
+      <h1 className="mb-2">{post.title}</h1>
+      <hr className="my-4" />
+      <Mdx code={post.body.code} />
+    </article>
   );
-};
-
-export default PostLayout;
+}

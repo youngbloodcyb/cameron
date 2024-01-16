@@ -1,18 +1,23 @@
-import { defineDocumentType, makeSource } from "contentlayer/source-files";
+import {
+  defineDocumentType,
+  makeSource,
+  ComputedFields,
+} from "contentlayer/source-files";
 
-const Post = defineDocumentType(() => ({
+export const Post = defineDocumentType(() => ({
   name: "Post",
   filePathPattern: `**/*.mdx`,
   contentType: "mdx",
   fields: {
     title: {
       type: "string",
-      description: "The title of the post",
       required: true,
+    },
+    description: {
+      type: "string",
     },
     date: {
       type: "date",
-      description: "The date of the post",
       required: true,
     },
   },
