@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useMDXComponent } from "next-contentlayer/hooks";
 
 const components = {
+  // https://github.com/hashicorp/next-mdx-remote/issues/405
   Image: (props: React.ComponentProps<typeof Image>) => (
     <Image {...props} alt={props.alt} />
   ),
