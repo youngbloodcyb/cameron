@@ -1,18 +1,15 @@
 import Link from "next/link";
 import { allPosts, Post } from "contentlayer/generated";
 import { compareDesc } from "date-fns";
+import Header from "@/components/header";
 
 function PostCard(post: Post) {
   return (
-    <main className="">
-      <section className="flex flex-col container divide-y">
-        <div>
-          <h2>
-            <Link href={post.url}>{post.title}</Link>
-          </h2>
-        </div>
-      </section>
-    </main>
+    <div>
+      <h2>
+        <Link href={post.url}>{post.title}</Link>
+      </h2>
+    </div>
   );
 }
 
@@ -22,13 +19,18 @@ function page() {
   );
 
   return (
-    <div>
-      <div>
-        {posts.map((post, idx) => (
-          <PostCard key={idx} {...post} />
-        ))}
-      </div>
-    </div>
+    <>
+      <Header />
+      <section className="flex flex-col">
+        <div>
+          <div>
+            {posts.map((post, idx) => (
+              <PostCard key={idx} {...post} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
 

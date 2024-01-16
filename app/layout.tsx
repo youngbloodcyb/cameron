@@ -20,9 +20,9 @@ export default function RootLayout({
         <meta property="og:image:width" content="<generated>" />
         <meta property="og:image:height" content="<generated>" />
       </head>
-      <body>
+      <body className="">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
+          <main className="flex flex-col h-screen container">{children}</main>
           <p className="hidden md:block text-slate-300 fixed bottom-4 right-4">
             © Cameron Youngblood, All rights reserved.
           </p>
