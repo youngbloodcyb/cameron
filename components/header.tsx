@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function Header() {
   return (
     <header className="container">
-      <div className="flex items-center justify-between border-b py-4">
+      <div className="flex items-center justify-between py-4">
         <Link className="flex font-black uppercase" href="/">
           <span className="sr-only">9D8</span>
           <Image

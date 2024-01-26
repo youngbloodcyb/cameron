@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
+import Header from "@/components/header";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,12 +23,10 @@ export default function RootLayout({
       </head>
       <body className="">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Header />
           <main className="flex flex-col h-screen container">{children}</main>
-          <p className="hidden md:block text-slate-300 fixed bottom-4 right-4">
+          <p className="hidden md:block fixed bottom-4 right-4 text-xs">
             © Cameron Youngblood, All rights reserved.
-          </p>
-          <p className="hidden md:block text-slate-300 fixed bottom-4 left-4">
-            contact me through twitter
           </p>
         </ThemeProvider>
       </body>
