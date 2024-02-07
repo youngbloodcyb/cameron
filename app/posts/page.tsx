@@ -9,7 +9,10 @@ type PostCardProps = Post & {
 function PostCard({ index, ...post }: PostCardProps) {
   const date = new Date(post.date).getFullYear();
   return (
-    <Link href={post.url} className="flex max-w-[500px] justify-between">
+    <Link
+      href={post.url}
+      className="flex max-w-[500px] justify-between mr-2 gap-2"
+    >
       <h2>{post.title}</h2>
       <h2>{date}</h2>
     </Link>
