@@ -8,13 +8,7 @@ export default function Header() {
       <div className="flex items-center justify-between py-4">
         <Link className="flex font-black uppercase" href="/">
           <span className="sr-only">9D8</span>
-          <Image
-            className="dark:invert"
-            width={100}
-            height={100}
-            src="vercel.svg"
-            alt="9d8 logo"
-          ></Image>
+          <Image width={25} height={25} src="logo.svg" alt="cameron.so"></Image>
         </Link>
         <div className="flex items-center justify-between gap-2">
           <Link href="https://github.com/9d8dev">
