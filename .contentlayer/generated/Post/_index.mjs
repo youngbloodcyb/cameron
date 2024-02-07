@@ -2,5 +2,6 @@
 
 import crossroadsOfTechnologyAndLiberalArtsMdx from './crossroads-of-technology-and-liberal-arts.mdx.json' assert { type: 'json' }
 import metaIsWrongAboutChatGptMdx from './meta-is-wrong-about-chat-gpt.mdx.json' assert { type: 'json' }
+import pokemonCardsMdx from './pokemon-cards.mdx.json' assert { type: 'json' }
 
-export const allPosts = [crossroadsOfTechnologyAndLiberalArtsMdx, metaIsWrongAboutChatGptMdx]
+export const allPosts = [crossroadsOfTechnologyAndLiberalArtsMdx, metaIsWrongAboutChatGptMdx, pokemonCardsMdx]
