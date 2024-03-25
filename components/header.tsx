@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="container">
+    <nav className="max-w-2xl m-auto container">
       <div className="flex items-center justify-between py-4">
         <Link className="flex font-black uppercase" href="/">
           <span className="sr-only">9D8</span>
@@ -22,6 +22,6 @@ export default function Header() {
           <ModeToggle />
         </div>
       </div>
-    </header>
+    </nav>
   );
 }

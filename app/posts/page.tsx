@@ -1,16 +1,11 @@
 import Link from "next/link";
-import { allPosts, Post } from "contentlayer/generated";
-import { compareDesc } from "date-fns";
+import { posts } from "@/lib/posts";
 
-type PostCardProps = Post & {
-  index: number;
-};
-
-function PostCard({ index, ...post }: PostCardProps) {
+function PostCard({ post }: { post: Post }) {
   const date = new Date(post.date).getFullYear();
   return (
     <Link
-      href={post.url}
+      href={`/posts/${post.slug}`}
       className="flex max-w-[500px] justify-between mr-2 gap-2"
     >
       <h2>{post.title}</h2>
@@ -19,18 +14,14 @@ function PostCard({ index, ...post }: PostCardProps) {
   );
 }
 
-function page() {
-  const posts = allPosts.sort((a, b) =>
-    compareDesc(new Date(a.date), new Date(b.date))
-  );
-
+export default function Page() {
   return (
     <>
-      <section className="w-full mt-10">
+      <section className="w-full mt-10 not-prose">
         <div>
           <div className="space-y-2">
             {posts.map((post, idx) => (
-              <PostCard key={idx} index={idx} {...post} />
+              <PostCard key={idx} post={post} />
             ))}
           </div>
         </div>
@@ -39,5 +30,3 @@ function page() {
     </>
   );
 }
-
-export default page;
