@@ -1,6 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import Image, { ImageProps } from "next/image";
 import Link from "next/link";
+import BackButton from "./components/back";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -25,6 +26,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {props.children}
       </Link>
     ),
+    BackButton,
     ...components,
   };
 }
