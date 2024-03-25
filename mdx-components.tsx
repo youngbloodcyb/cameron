@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import Image, { ImageProps } from "next/image";
+import Link from "next/link";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -18,6 +19,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
           day: "numeric",
         })}
       </span>
+    ),
+    Link: (props) => (
+      <Link href={props.link} className="not-prose underline" {...props}>
+        {props.children}
+      </Link>
     ),
     ...components,
   };
