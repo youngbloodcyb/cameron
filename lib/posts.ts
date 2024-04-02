@@ -1,10 +1,10 @@
 export const posts: Post[] = [
-  {
-    title: "Pokémon — The immature derision of interests",
-    description: "The immature derision of interests",
-    date: "2024-02-06",
-    slug: "pokemon-the-immature-derision-of-interests",
-  },
+  // {
+  //   title: "Pokémon — The immature derision of interests",
+  //   description: "The immature derision of interests",
+  //   date: "2024-02-06",
+  //   slug: "pokemon-the-immature-derision-of-interests",
+  // },
   {
     title: "Meta's wrong about ChatGPT",
     description: "Meta Chief AI Scientist Yann LeCun is Wrong About ChatGPT",
