@@ -6,7 +6,7 @@ function PostCard({ post }: { post: Post }) {
   return (
     <Link
       href={`/posts/${post.slug}`}
-      className="flex max-w-[500px] justify-between mr-2 gap-2"
+      className="flex justify-between mr-2 gap-2"
     >
       <h2>{post.title}</h2>
       <h2>{date}</h2>
