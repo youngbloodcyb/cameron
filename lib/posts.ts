@@ -6,6 +6,12 @@ export const posts: Post[] = [
   //   slug: "pokemon-the-immature-derision-of-interests",
   // },
   {
+    title: "How to backup a Vercel Postgres Database",
+    description: "Backup a Vercel Postgres Database with pg_dump and Docker",
+    date: "2024-04-19",
+    slug: "backup-vercel-postgres",
+  },
+  {
     title: "Meta's wrong about ChatGPT",
     description: "Meta Chief AI Scientist Yann LeCun is Wrong About ChatGPT",
     date: "2023-01-26",
