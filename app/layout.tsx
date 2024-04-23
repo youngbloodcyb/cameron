@@ -10,6 +10,7 @@ import { Analytics } from "@vercel/analytics/react";
 export const metadata: Metadata = {
   title: "cameron.so",
   description: "All the things I make.",
+  metadataBase: new URL("https://cameron.so"),
 };
 
 export default function RootLayout({
