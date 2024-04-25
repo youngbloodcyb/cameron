@@ -6,6 +6,18 @@ export const posts: Post[] = [
   //   slug: "pokemon-the-immature-derision-of-interests",
   // },
   {
+    title: "Objects are not memories",
+    description: "Our memories are so much more than just objects.",
+    date: "2024-04-26",
+    slug: "objects-are-not-memories",
+  },
+  {
+    title: "Humans forget so quickly",
+    description: "Why do we forget things so quickly as humans?",
+    date: "2024-04-24",
+    slug: "humans-forget-so-quickly",
+  },
+  {
     title: "How to backup a Vercel Postgres Database",
     description: "Backup a Vercel Postgres Database with pg_dump and Docker",
     date: "2024-04-19",
