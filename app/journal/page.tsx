@@ -5,7 +5,7 @@ function PostCard({ post }: { post: Post }) {
   const date = new Date(post.date).getFullYear();
   return (
     <Link
-      href={`/posts/${post.slug}`}
+      href={`/journal/${post.slug}`}
       className="flex justify-between mr-2 gap-2"
     >
       <h2>{post.title}</h2>

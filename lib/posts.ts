@@ -18,6 +18,12 @@ export const posts: Post[] = [
   //   slug: "humans-forget-so-quickly",
   // },
   {
+    title: "Build into Existence",
+    description: "Create the things you wish existed",
+    date: "2024-10-08",
+    slug: "build-into-existence",
+  },
+  {
     title: "How to backup a Vercel Postgres Database",
     description: "Backup a Vercel Postgres Database with pg_dump and Docker",
     date: "2024-04-19",
