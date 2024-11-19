@@ -31,17 +31,17 @@ One of the key features of Wavefinder is an image editor. This allows users to c
 
 The image editor is built using shadcn/ui components and Zustand. Using Zustand significantly reduced the complexity of managing state in the editor compared to native React state.
 
-![Wavefinder Editor](https://cameron-portfolio.s3.us-west-2.amazonaws.com/wavefinder/editor.png)
+<Image alt="Wavefinder Editor" src="https://cameron-portfolio.s3.us-west-2.amazonaws.com/wavefinder/editor.png" />
 
 The images are rendered using Vercel OpenGraph image routes. The API uses [resvg-wasm](https://www.npmjs.com/package/@resvg/resvg-wasm) with WebAssembly (WASM) to convert the images from an SVG to a PNG.
 
-![Wavefinder Image API](https://cameron-portfolio.s3.us-west-2.amazonaws.com/wavefinder/api.png)
+<Image alt="Wavefinder Image API" src="https://cameron-portfolio.s3.us-west-2.amazonaws.com/wavefinder/api.png" />
 
 # Chat interface
 
 The core AI component of the app is a chat interface that allows users to interact and create ad headlines that they can then easily add to a campaign. To create a campaign, the user creates ad headlines within the chat interface, adds them to the campaign form, and then selects which image template to use for the ads. The ad copy is then dyanmically swapped for the dynamic text on the image template and the ads are generated instantly, each using their unique API route.
 
-![Wavefinder Image API](https://cameron-portfolio.s3.us-west-2.amazonaws.com/wavefinder/chat.png)
+<Image alt="Wavefinder Chat" src="https://cameron-portfolio.s3.us-west-2.amazonaws.com/wavefinder/chat.png" />
 
 # Facebook Integration
 
