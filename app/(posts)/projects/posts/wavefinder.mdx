@@ -1,10 +1,52 @@
 ---
-title: "Getting Started"
-author: 
-  name: "Raphael Salaja"
-  link: "https://twitter.com/raphaelsalaja"
-  handle: "raphaelsalaja"
+title: "Wavefinder"
 time:
   created: "2024-10-12T20:54:05.150Z"
   updated: "2024-10-17T09:56:06.854Z"
 ---
+
+# Overview
+
+Wavefinder is an app for creating and testing ad messages at scale with AI. I was the lead full-stack engineer on this project at Ampry.
+
+# Tech Stack
+
+<Preview codeblock>
+  - Next.js
+  - TypeScript
+  - React & RSC
+  - Zustand
+  - WebAssembly
+  - Next Safe Action
+  - Postgres
+  - Vercel
+  - shadcn/ui
+  - Upstash QStash
+  - Facebook Business API
+</Preview>
+
+# Image editor
+
+One of the key features of Wavefinder is an image editor. This allows users to create image templates that can be used to generate images via an API. The images are predominantly static, but dynamic text / ad copy can be passed in via URL parameters in the API request.
+
+The image editor is built using shadcn/ui components and Zustand. Using Zustand significantly reduced the complexity of managing state in the editor compared to native React state.
+
+![Wavefinder Editor](https://cameron-portfolio.s3.us-west-2.amazonaws.com/wavefinder/editor.png)
+
+The images are rendered using Vercel OpenGraph image routes. The API uses [resvg-wasm](https://www.npmjs.com/package/@resvg/resvg-wasm) with WebAssembly (WASM) to convert the images from an SVG to a PNG.
+
+![Wavefinder Image API](https://cameron-portfolio.s3.us-west-2.amazonaws.com/wavefinder/api.png)
+
+# Chat interface
+
+The core AI component of the app is a chat interface that allows users to interact and create ad headlines that they can then easily add to a campaign. To create a campaign, the user creates ad headlines within the chat interface, adds them to the campaign form, and then selects which image template to use for the ads. The ad copy is then dyanmically swapped for the dynamic text on the image template and the ads are generated instantly, each using their unique API route.
+
+![Wavefinder Image API](https://cameron-portfolio.s3.us-west-2.amazonaws.com/wavefinder/chat.png)
+
+# Facebook Integration
+
+A core component of the application is integrating to Facebook (Meta) ads platform to instantly create and publish ads via Wavefinder. This is all configurable by the user and allows them to manage campaigns directly from Wavefinder rather than going through Facebook.
+
+# Background jobs
+
+Another key aspect of Wavefinder is a rule-based engine for taking actions on campaigns created through Wavefinder. To do this, we implemented background jobs running on Upstash that run frequently to check ad performance. Based on pre-set filters and rules, actions are automatically taken to further optimize the ad campaign.
