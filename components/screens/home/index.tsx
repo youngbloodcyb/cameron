@@ -33,22 +33,31 @@ export default function Home() {
         <p>Full-stack Software Engineer.</p>
         <p>
           Working at{" "}
-          <Link href="https://ampry.com" className="underline">
+          <Link href="https://ampry.com" className="underline" target="_blank">
             Ampry
           </Link>
           . Side projects at{" "}
-          <Link href="https://9d8.dev" className="underline">
+          <Link href="https://9d8.dev" className="underline" target="_blank">
             9d8
           </Link>
           .
+        </p>
+        <p>
+          <Link
+            href="https://resume.cameron.so"
+            className="underline"
+            target="_blank"
+          >
+            Resume
+          </Link>
         </p>
       </FadeIn.Item>
       <FadeIn.Item>
         <Posts category="projects" />
       </FadeIn.Item>
-      <FadeIn.Item>
+      {/* <FadeIn.Item>
         <Posts category="examples" />
-      </FadeIn.Item>
+      </FadeIn.Item> */}
       <Spacer />
       <FadeIn.Item>
         <Footer />
