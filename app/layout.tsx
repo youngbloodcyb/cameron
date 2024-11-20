@@ -1,44 +1,35 @@
+import "@/styles/main.css";
+
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/theme-provider";
-import Header from "@/components/header";
-import "./globals.css";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import { Main } from "@/components/craft";
-import { Analytics } from "@vercel/analytics/react";
+
+import { Providers } from "@/components/providers";
+import { OpenGraph } from "@/lib/og";
+
+import clsx from "clsx";
+import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
-  title: "cameron.so",
-  description: "All the things I make.",
-  metadataBase: new URL("https://cameron.so"),
+  ...OpenGraph,
 };
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
-    >
-      <head>
-        <meta property="og:image" content="<generated>" />
-        <meta property="og:image:type" content="<generated>" />
-        <meta property="og:image:width" content="<generated>" />
-        <meta property="og:image:height" content="<generated>" />
-      </head>
-      <body className="font-sans">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header />
-          <Main className="flex flex-col">{children}</Main>
-          <p className="hidden md:block fixed bottom-4 right-4 text-xs">
-            © Cameron Youngblood, All rights reserved.
-          </p>
-        </ThemeProvider>
-        <Analytics />
+    <html lang="en" className={clsx(inter.className)} suppressHydrationWarning>
+      <body>
+        <Providers>
+          <main className="mx-auto max-w-screen-sm overflow-x-hidden px-6 py-24 md:overflow-x-visible ">
+            <article className="article">{children}</article>
+          </main>
+        </Providers>
       </body>
     </html>
   );
