@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://cameron.so/
+
+# Sitemaps
+Sitemap: https://cameron.so/sitemap.xml

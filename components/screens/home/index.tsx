@@ -16,11 +16,7 @@ export default function Home() {
 
             <h2>
               aka{" "}
-              <Link
-                href="https://github.com/youngbloodcyb"
-                target="_blank"
-                className="underline"
-              >
+              <Link href="https://github.com/youngbloodcyb" target="_blank" className="underline">
                 @youngbloodcyb
               </Link>
             </h2>
@@ -42,11 +38,7 @@ export default function Home() {
           .
         </p>
         <p>
-          <Link
-            href="https://resume.cameron.so"
-            className="underline"
-            target="_blank"
-          >
+          <Link href="https://resume.cameron.so" className="underline" target="_blank">
             Resume
           </Link>
         </p>
