@@ -1,10 +1,92 @@
 ---
-title: "Getting Started"
-author: 
-  name: "Raphael Salaja"
-  link: "https://twitter.com/raphaelsalaja"
-  handle: "raphaelsalaja"
+title: "Router.so"
 time:
-  created: "2024-10-12T20:54:05.150Z"
-  updated: "2024-10-17T09:56:06.854Z"
+  created: "2024-09-05T20:54:05.150Z"
+  updated: "2024-11-19T09:56:06.854Z"
 ---
+
+# Router.so
+
+<Preview codeblock>
+<div className="flex flex-row gap-4">
+  <Image src='https://cameron-portfolio.s3.us-west-2.amazonaws.com/router/tweet.jpg' alt='Tweet from Vercel CEO' />
+</div>
+> Guillermo Rauch, Vercel CEO
+</Preview>
+```text
+> this product is VERY good... you're onto something
+```
+
+Router.so was a quick idea that turned into a full-fledged product. After building many sites with contact and help forms, [Bridger Tower](https://bridger.to) and I got tired of having to spin up a database to collect leads for each individual project. This always led to losing leads and forgetting about where data was being held. We eventually decided to build a simple lead router to collect leads across various sites.
+
+Instead of it just simply collecting leads, we figured it would be helpful to also validate those leads and give positive feedback on why it was or wasn't accepted. In an afternoon, I built an initial MVP that was the basis for what Router.so became. 
+
+Router.so has proved some early product market fit. Many developers are using it and giving feedback. We have also been hit up by a few Venture Capital funds interested in the product. We broke the top 10 on a Product Hunt launch day (completely organically). **And finally, Guillermo Rauch did actually DM me about Router.so with some positive feedback and kind words.**
+
+<Preview codeblock>
+  200+ Stars on GitHub
+  
+  850+ Users
+
+  9000+ leads collected
+</Preview>
+```text
+Updated November 19, 2024
+Used by large VC-backed company w/ ~$60m in funding and by hundreds of independent developers
+```
+
+# Tech Stack
+
+This project is actually pretty simple. It's a Next.js application that uses Postgres, DrizzleORM, and TypeScript. Zod is the most important dependency of the project as it enables the parsing and validating of leads on the server.
+
+It is completely open source and all the source code can be accessed on [GitHub](https://github.com/routerso/router/).
+
+# Technical Details
+
+The entirety of the validation logic is primarily handled by two functions:
+
+```js
+type GeneralSchema = {
+  key: string;
+  value: ValidationType;
+  required?: boolean;
+};
+
+export const generateDynamicSchema = (
+  schema: GeneralSchema[]
+): z.ZodRawShape => {
+  return schema.reduce<z.ZodRawShape>((acc, { key, value }) => {
+    const validation = validations[value];
+    if (validation) {
+      acc[key as keyof SchemaToZodMap] = validation;
+    }
+    return acc;
+  }, {});
+};
+```
+
+Given an array defined by the user in the UI that satisfies the type `Array<GeneralSchema>`, the `generateDynamicSchema` function iterates through the array and maps each item to its corresponding validation rule, ultimately constructing a `ZodRawShape` object.
+
+```js
+export const validateAndParseData = (
+  dynamicSchema: z.ZodRawShape,
+  data: any
+) => {
+  const EndpointZodSchema = z.object(dynamicSchema);
+
+  Object.keys(dynamicSchema).forEach((key) => {
+    const validation = dynamicSchema[key];
+    console.log(`Field: ${key}, Validation: ${validation._def.typeName}`);
+  });
+
+  return EndpointZodSchema.safeParse(data);
+};
+```
+
+When data is received via an API POST, the `validateAndParseData` function uses the created schema to safe parse the incoming payload. If the data is valid, it is saved to the database for the user to access. If not, a thorough log is returned with exact reasons why the lead was not parsed and saved.
+
+# Design
+
+I would be remiss if I didn't emphasize the beauty of the UI and give a special shoutout again to [Bridger Tower](https://bridger.to).
+
+<Image src='https://cameron-portfolio.s3.us-west-2.amazonaws.com/router/dashboard.png' alt='Router.so Dashboard' />
