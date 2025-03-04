@@ -16,7 +16,11 @@ export default function Home() {
 
             <h2>
               aka{" "}
-              <Link href="https://github.com/youngbloodcyb" target="_blank" className="underline">
+              <Link
+                href="https://github.com/youngbloodcyb"
+                target="_blank"
+                className="underline"
+              >
                 @youngbloodcyb
               </Link>
             </h2>
@@ -25,23 +29,30 @@ export default function Home() {
       </FadeIn.Item>
       <Spacer />
       <FadeIn.Item>
-        <p>Full-stack Software Engineer.</p>
+        <p>build, sell, surf</p>
         <p>
-          Working at{" "}
-          <Link href="https://ampry.com" className="underline" target="_blank">
-            Ampry
+          Currenty at{" "}
+          <Link href="https://vercel.com" className="underline" target="_blank">
+            Vercel
           </Link>
-          . Side projects at{" "}
+          .
+        </p>
+        <p>
+          Side projects at{" "}
           <Link href="https://9d8.dev" className="underline" target="_blank">
             9d8
           </Link>
           .
         </p>
-        <p>
-          <Link href="https://resume.cameron.so" className="underline" target="_blank">
+        {/* <p>
+          <Link
+            href="https://resume.cameron.so"
+            className="underline"
+            target="_blank"
+          >
             Resume
           </Link>
-        </p>
+        </p> */}
       </FadeIn.Item>
       <FadeIn.Item>
         <Posts category="projects" />
