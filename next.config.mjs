@@ -4,6 +4,15 @@ import nextMDX from "@next/mdx";
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ["md", "mdx", "tsx", "ts", "jsx", "js"],
+  async redirects() {
+    return [
+      {
+        source: '/30',
+        destination: 'https://cal.com/youngbloodcyb/sync',
+        permanent: false,
+      },
+    ]
+  },
 };
 
 const withMDX = nextMDX({
