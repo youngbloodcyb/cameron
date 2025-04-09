@@ -31,7 +31,7 @@ export default function Home() {
       <FadeIn.Item>
         <p>build, sell, surf</p>
         <p>
-          Currenty at{" "}
+          Currently at{" "}
           <Link href="https://vercel.com" className="underline" target="_blank">
             Vercel
           </Link>
