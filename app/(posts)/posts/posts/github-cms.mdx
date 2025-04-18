@@ -1,76 +1,110 @@
 ---
-title: "GitHub CMS"
+title: "Using GitHub as a CMS"
 time:
-  created: "2024-07-06T20:54:05.150Z"
-  updated: "2024-12-30T08:00:38.860Z"
+  created: "2025-04-18T21:35:31.133Z"
+  updated: "2025-04-18T21:35:31.133Z"
 ---
 
-<Preview codeblock>
-  888 Stars on GitHub
-</Preview>
 ```text
-Updated Apr 18, 2025
-In use by large-scale content sites in production
+In this post we'll create a blog using Next.js, MDX, and GitHub.
 ```
 
 # Background
 
-[Bridger Tower](https://bridger.to) and I found ourselves often working on antiquated WordPress sites that wanted to take advantage of modern web development benefits. To allow this to happen, we created a headless CMS system that uses Wordpress as a CMS and Next.js as a frontend. 
+While I can list reasons I think GitHub works well as a CMS, PostHog already said it better than me in this [blog post](https://posthog.com/blog/github-cms). So instead, let's dive into the code and see how it works.
 
-# Design Decisions
+# GitHub API
 
-One of the key design decisions in this project is that we opted to use the WordPress REST API. As such, we often get the question: *Why didn't you use GraphQL?* Well, there are two main reasons:
+By default, GitHub exposes a beautiful API to fetch content from a repository that does not require any sort of authorization. That said, if you find yourself fetching content frequently, you may want to authorize your requests to avoid being ratelimited.
 
-1. We don't really like GraphQL all that much
-2. It adds unnecessary complexity for 90% of use cases
+To fetch your repository content, follow this API structure:
 
-I only half joke about the first reason. I prefer to work with a REST API when possible, but there are plenty of use cases for GraphQL. 
-
-This project seemed to follow the 90/10 rule. That is, if we added GraphQL, we would be catering to probably about 10% of users while taking 90% of our time. So, we opted against GraphQL.
-
-# Technical Details
-
-The project is setup to ensure the most seamless experience possible. After configuring the REST API within Wordpress, you simply add two environment variables to get the project up and running:
-
-```bash
-WORDPRESS_URL="https://wordpress.com"
-WORDPRESS_HOSTNAME="wordpress.com"
+```
+https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}?ref=main
 ```
 
-By default, NextWP supports all default post types in WordPress and even supports custom pages. 
+To create a succinct and effective CMS using GitHub, we'll want to sructure our repo correctly on GitHub. You can take liberty in how you define this. Here is how I did it:
 
-It takes advantage of Next.js SSR and ISR features. It's also pre-configured to be optimized for search engines. By default, it creates a sitemap at build time using the `sitemap.ts` file: 
+```
+dir
+├── blog
+│   ├── ipsum.md
+│   └── lorem.md
+└── post
+    ├── one.md
+    └── two.md
+```
 
-```js
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts = await getAllPosts();
+This repo has two subdirectories `blog` and `post`, each with their own markdown files.
 
-  const staticUrls: MetadataRoute.Sitemap = [
-    {
-      url: `${siteConfig.site_domain}`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 1,
-    },
-    {
-      url: `${siteConfig.site_domain}/posts`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    // ... more
-  ];
+# Next.js
 
-  // ...more
+Create a dynamic route in your Next.js app for the blog. It should resemble `app/blog/[slug]/page.tsx`. In this `page.tsx` file is where we will fetch the content for a blog based on the GitHub API. 
 
-  return [...staticUrls, ...postUrls];
+The code for a page will look something like this:
+
+```text
+🚧 Some things to be aware of:
+
+- GitHub returns the content base64 encoded.
+- I'm using React markdown w/ Tailwind typography, but you could technically store content as HTML if you prefer.
+
+```
+
+```
+import ReactMarkdown from "react-markdown"
+
+export const revalidate = 3600
+
+export async function generateStaticParams() {
+  const response = await fetch(
+    "https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/contents/blog?ref=main"
+  )
+  const files = await response.json()
+
+  return files.map((file) => ({
+    slug: file.name.split(".")[0],
+  }))
+}
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+
+  const blog = await fetch(
+    `https://api.github.com/repos/{GITHUB_USER}/{REPO_NAME}/contents/blog/${slug}.md?ref=main`
+  )
+
+  if (!blog.ok) {
+    return notFound()
+  }
+
+  const blogContent = await blog.json()
+
+  // Decode the base64 content
+  const decodedContent = Buffer.from(blogContent.content, "base64").toString(
+    "utf-8"
+  )
+
+  return (
+    <main className="p-20">
+      <article className="prose">
+        <ReactMarkdown>{decodedContent}</ReactMarkdown>
+      </article>
+    </main>
+  )
 }
 ```
 
-It's also built using React Server Components and takes advantage of SSR page speeds.
+Notice how we're generating static params using the URL for the directory, and then we're fetching each individual blog post using the slug being passed through as page props.
 
-<Image alt="NextWP Page Speed Insights Score" src="https://cameron-portfolio.s3.us-west-2.amazonaws.com/nextwp/speed.png" />
+We can now do the same thing for `app/posts/[slug]/page.tsx` for our other directory of content in our CMS.
 
-# Open Source
+# Wrapping Up
 
-NextWP is fully open source under the MIT license. There are a few large known sites running on NextWP including [InternetServices.com](https://internetservices.com). There have also been many contributions from community members—including members of the WordPress and Automattic team. It's very extensible and we hope to keep building off of it in the future!
+That's it! You can tweak the ISR settings and styles, but that's how you can use GitHub as a CMS. 
+
+I haven't yet played around with loading images and using custom components, but I may add to this in the future.
