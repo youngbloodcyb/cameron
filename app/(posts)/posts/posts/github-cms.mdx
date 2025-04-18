@@ -1,0 +1,76 @@
+---
+title: "GitHub CMS"
+time:
+  created: "2024-07-06T20:54:05.150Z"
+  updated: "2024-12-30T08:00:38.860Z"
+---
+
+<Preview codeblock>
+  888 Stars on GitHub
+</Preview>
+```text
+Updated Apr 18, 2025
+In use by large-scale content sites in production
+```
+
+# Background
+
+[Bridger Tower](https://bridger.to) and I found ourselves often working on antiquated WordPress sites that wanted to take advantage of modern web development benefits. To allow this to happen, we created a headless CMS system that uses Wordpress as a CMS and Next.js as a frontend. 
+
+# Design Decisions
+
+One of the key design decisions in this project is that we opted to use the WordPress REST API. As such, we often get the question: *Why didn't you use GraphQL?* Well, there are two main reasons:
+
+1. We don't really like GraphQL all that much
+2. It adds unnecessary complexity for 90% of use cases
+
+I only half joke about the first reason. I prefer to work with a REST API when possible, but there are plenty of use cases for GraphQL. 
+
+This project seemed to follow the 90/10 rule. That is, if we added GraphQL, we would be catering to probably about 10% of users while taking 90% of our time. So, we opted against GraphQL.
+
+# Technical Details
+
+The project is setup to ensure the most seamless experience possible. After configuring the REST API within Wordpress, you simply add two environment variables to get the project up and running:
+
+```bash
+WORDPRESS_URL="https://wordpress.com"
+WORDPRESS_HOSTNAME="wordpress.com"
+```
+
+By default, NextWP supports all default post types in WordPress and even supports custom pages. 
+
+It takes advantage of Next.js SSR and ISR features. It's also pre-configured to be optimized for search engines. By default, it creates a sitemap at build time using the `sitemap.ts` file: 
+
+```js
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await getAllPosts();
+
+  const staticUrls: MetadataRoute.Sitemap = [
+    {
+      url: `${siteConfig.site_domain}`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 1,
+    },
+    {
+      url: `${siteConfig.site_domain}/posts`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    // ... more
+  ];
+
+  // ...more
+
+  return [...staticUrls, ...postUrls];
+}
+```
+
+It's also built using React Server Components and takes advantage of SSR page speeds.
+
+<Image alt="NextWP Page Speed Insights Score" src="https://cameron-portfolio.s3.us-west-2.amazonaws.com/nextwp/speed.png" />
+
+# Open Source
+
+NextWP is fully open source under the MIT license. There are a few large known sites running on NextWP including [InternetServices.com](https://internetservices.com). There have also been many contributions from community members—including members of the WordPress and Automattic team. It's very extensible and we hope to keep building off of it in the future!
