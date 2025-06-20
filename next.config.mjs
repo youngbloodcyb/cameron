@@ -7,11 +7,16 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/30',
-        destination: 'https://cal.com/youngbloodcyb/sync',
+        source: "/30",
+        destination: "https://cal.com/youngbloodcyb/sync",
         permanent: false,
       },
-    ]
+      {
+        source: "/house",
+        destination: "https://v0-home-expense-dashboard.vercel.app/",
+        permanent: false,
+      },
+    ];
   },
 };
 
