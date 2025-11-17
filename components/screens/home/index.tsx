@@ -29,18 +29,39 @@ export default function Home() {
       </FadeIn.Item>
       <Spacer />
       <FadeIn.Item>
-        <p>build, sell, surf</p>
         <p>
-          engineering ai systems for gtm at{" "}
+          engineering stuff at{" "}
           <Link href="https://vercel.com" className="underline" target="_blank">
             Vercel
           </Link>
           .
         </p>
         <p>
-          Side projects at{" "}
+          building products at{" "}
           <Link href="https://9d8.dev" className="underline" target="_blank">
             9d8
+          </Link>
+          .
+        </p>
+        <p>
+          working on{" "}
+          <Link
+            href="https://flysuper.com"
+            className="underline"
+            target="_blank"
+          >
+            flysuper.com
+          </Link>
+          .
+        </p>
+        <p>
+          musing through{" "}
+          <Link
+            href="https://culturecall.substack.com/"
+            className="underline"
+            target="_blank"
+          >
+            Culture Call
           </Link>
           .
         </p>
@@ -54,12 +75,12 @@ export default function Home() {
           </Link>
         </p> */}
       </FadeIn.Item>
-      <FadeIn.Item>
+      {/* <FadeIn.Item>
         <Posts category="projects" />
-      </FadeIn.Item>
-      <FadeIn.Item>
+      </FadeIn.Item> */}
+      {/* <FadeIn.Item>
         <Posts category="posts" />
-      </FadeIn.Item>
+      </FadeIn.Item> */}
       <Spacer />
       <FadeIn.Item>
         <Footer />
