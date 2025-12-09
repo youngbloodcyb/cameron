@@ -65,6 +65,7 @@ export default function Home() {
           </Link>
           .
         </p>
+        <p>located in california, usa</p>
         {/* <p>
           <Link
             href="https://resume.cameron.so"
