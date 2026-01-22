@@ -43,7 +43,7 @@ export default function Home() {
           </Link>
           .
         </p>
-        <p>
+        {/* <p>
           working on{" "}
           <Link
             href="https://flysuper.com"
@@ -53,7 +53,7 @@ export default function Home() {
             flysuper.com
           </Link>
           .
-        </p>
+        </p> */}
         <p>
           musing through{" "}
           <Link
