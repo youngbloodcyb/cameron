@@ -6,7 +6,7 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
   href: string;
 }
 
-function FootnoteForwardReference({ href, children }: Props): JSX.Element {
+function FootnoteForwardReference({ href, children }: Props): React.JSX.Element {
   const scroll = () => {
     const footnote = document.querySelector(`[id="${href.replace("fn-", "fnref-")}"]`);
 

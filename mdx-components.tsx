@@ -64,7 +64,7 @@ const components: MDXComponents = {
   ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => {
     if (
       React.Children.toArray(props.children).some(
-        (child) => React.isValidElement(child) && (child as React.ReactElement).props.id?.includes("user-content-fn-"),
+        (child) => React.isValidElement(child) && (child as React.ReactElement<{ id?: string }>).props.id?.includes("user-content-fn-"),
       )
     ) {
       return (
@@ -82,14 +82,16 @@ const components: MDXComponents = {
       return (
         <li id={props.id}>
           {React.Children.map(children, (child) => {
-            if (React.isValidElement(child)) {
+            if (React.isValidElement<{ children: React.ReactNode[] }>(child)) {
               if (child.type === "p") {
-                const href = child.props.children.find((child: React.ReactNode) => {
-                  if (React.isValidElement(child)) {
-                    return React.isValidElement(child) && "props" in child && (child.props as { href?: string }).href?.includes("user-content-fnref-");
-                  }
-                  return false;
-                })?.props.href;
+                const href = (
+                  child.props.children.find((child: React.ReactNode) => {
+                    if (React.isValidElement(child)) {
+                      return React.isValidElement(child) && "props" in child && (child.props as { href?: string }).href?.includes("user-content-fnref-");
+                    }
+                    return false;
+                  }) as React.ReactElement<{ href: string }> | undefined
+                )?.props.href;
 
                 const filtered = child.props.children.filter((child: React.ReactNode) => {
                   if (React.isValidElement(child)) {
@@ -98,7 +100,7 @@ const components: MDXComponents = {
                   return true;
                 });
 
-                return <FootnoteBackReference href={href}>{filtered}</FootnoteBackReference>;
+                return <FootnoteBackReference href={href ?? ""}>{filtered}</FootnoteBackReference>;
               }
               return child;
             }
@@ -117,7 +119,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   };
 }
 
-export function MDX(props: JSX.IntrinsicAttributes & MDXRemoteProps) {
+export function MDX(props: React.JSX.IntrinsicAttributes & MDXRemoteProps) {
   return (
     <MDXRemote
       {...props}

@@ -11,7 +11,7 @@ const route = "posts";
 const Posts = getPosts(route);
 
 interface PageProps {
-  params: Post;
+  params: Promise<Pick<Post, "slug">>;
 }
 
 export async function generateStaticParams() {
@@ -20,9 +20,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
   const post = Posts.find(
-    (post: { slug: string }) => post.slug === params.slug,
+    (post: { slug: string }) => post.slug === slug,
   );
   const title = post ? post.title : "";
   const image = `${process.env.NEXT_PUBLIC_SITE_URL}api/og?title=${encodeURIComponent(title)}`;
@@ -40,9 +41,10 @@ export function generateMetadata({ params }: PageProps) {
   };
 }
 
-export default function Page({ params }: PageProps) {
+export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
   const post = Posts.find(
-    (post: { slug: string }) => post.slug === params.slug,
+    (post: { slug: string }) => post.slug === slug,
   );
 
   if (!post) {
