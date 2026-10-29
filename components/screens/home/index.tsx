@@ -30,14 +30,25 @@ export default function Home() {
       <Spacer />
       <FadeIn.Item>
         <p>
-          building ai agents at{" "}
+          enterprise growth engineering at{" "}
           <Link href="https://vercel.com" className="underline" target="_blank">
             Vercel
           </Link>
           .
         </p>
+        <p>
+          writing{" "}
+          <Link
+            href="https://shipgtm.substack.com"
+            className="underline"
+            target="_blank"
+          >
+            ShipGTM
+          </Link>
+          .
+        </p>
         <p>located in california, usa</p>
-        {/* <p>
+        {/*<p>
           <Link
             href="https://resume.cameron.so"
             className="underline"
