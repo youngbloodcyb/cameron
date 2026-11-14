@@ -8,7 +8,9 @@ import { useEffect, useRef } from "react";
 const COLS = 4;
 const ROWS = 2;
 const FRAMES = COLS * ROWS;
-const REST_FRAME = 2; // the most upright pose, shown while he stands still
+
+// public/walker-still.png is a single 256px frame of him standing, aligned
+// the same way as the walk frames, shown whenever he isn't walking.
 
 const SPEED = 70; // px per second
 const FPS = 10; // walk-cycle frames per second
@@ -23,13 +25,15 @@ const MAX_LEG = 400; // farthest px he walks before picking a new spot
 export function Walker() {
   const ref = useRef<HTMLDivElement>(null);
   const spriteRef = useRef<HTMLDivElement>(null);
+  const stillRef = useRef<HTMLDivElement>(null);
   const shadowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = ref.current;
     const sprite = spriteRef.current;
+    const still = stillRef.current;
     const shadow = shadowRef.current;
-    if (!el || !sprite || !shadow) return;
+    if (!el || !sprite || !still || !shadow) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       el.style.display = "none";
       return;
@@ -131,9 +135,12 @@ export function Walker() {
         }
       }
 
-      const shown = now < restUntil ? REST_FRAME : frame;
-      const col = shown % COLS;
-      const row = Math.floor(shown / COLS);
+      const resting = now < restUntil;
+      sprite.style.visibility = resting ? "hidden" : "visible";
+      still.style.visibility = resting ? "visible" : "hidden";
+
+      const col = frame % COLS;
+      const row = Math.floor(frame / COLS);
       sprite.style.backgroundPosition = `${(col * 100) / (COLS - 1)}% ${(row * 100) / (ROWS - 1)}%`;
       // Ease up when picked up and back down when dropped; the shadow
       // stays put on the ground.
@@ -174,6 +181,11 @@ export function Walker() {
           backgroundImage: "url(/walker.png)",
           backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
         }}
+      />
+      <div
+        ref={stillRef}
+        className="invisible absolute inset-0 bg-contain bg-no-repeat"
+        style={{ backgroundImage: "url(/walker-still.png)" }}
       />
     </div>
   );
