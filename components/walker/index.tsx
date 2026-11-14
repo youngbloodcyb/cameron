@@ -172,7 +172,8 @@ export function Walker() {
       {/* Shown on the "ground" under his feet while he's lifted. */}
       <div
         ref={shadowRef}
-        className="absolute left-1/2 top-[98%] h-[8%] w-[45%] rounded-full bg-black/30 opacity-0 blur-[1px]"
+        className="absolute left-1/2 top-[98%] h-[8%] w-[45%] rounded-full bg-black/30 blur-[1px]"
+        style={{ opacity: 0 }}
       />
       <div
         ref={spriteRef}
@@ -184,8 +185,14 @@ export function Walker() {
       />
       <div
         ref={stillRef}
-        className="invisible absolute inset-0 bg-contain bg-no-repeat"
-        style={{ backgroundImage: "url(/walker-still.png)" }}
+        // Visibility is set inline, not with Tailwind's `invisible`: this
+        // project's Tailwind uses `important: true`, which would make the
+        // class beat the inline style the animation loop sets.
+        className="absolute inset-0 bg-contain bg-no-repeat"
+        style={{
+          backgroundImage: "url(/walker-still.png)",
+          visibility: "hidden",
+        }}
       />
     </div>
   );
