@@ -305,3 +305,9 @@
     }
   }
 }
+
+/* While the walker is being carried, show a grabbing hand everywhere. */
+html.walker-held,
+html.walker-held * {
+  cursor: grabbing !important;
+}

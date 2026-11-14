@@ -3,6 +3,7 @@ import "@/styles/main.css";
 import type { Metadata } from "next";
 
 import { Providers } from "@/components/providers";
+import { Walker } from "@/components/walker";
 import { OpenGraph } from "@/lib/og";
 
 import { Analytics } from "@vercel/analytics/next";
@@ -30,6 +31,7 @@ export default function RootLayout({
           <main className="mx-auto max-w-screen-sm overflow-x-hidden px-6 py-24 md:overflow-x-visible ">
             <article className="article">{children}</article>
           </main>
+          <Walker />
         </Providers>
         <Analytics />
       </body>
