@@ -30,7 +30,7 @@ export default function Home() {
       <Spacer />
       <FadeIn.Item>
         <p>
-          enterprise growth engineering at{" "}
+          technical growth staff at{" "}
           <Link href="https://vercel.com" className="underline" target="_blank">
             Vercel
           </Link>
