@@ -34,7 +34,6 @@ export default function Home() {
           <Link href="https://vercel.com" className="underline" target="_blank">
             Vercel
           </Link>
-          .
         </p>
         <p>
           writing{" "}
@@ -45,7 +44,6 @@ export default function Home() {
           >
             ShipGTM
           </Link>
-          .
         </p>
         <p>located in california, usa</p>
         {/*<p>
