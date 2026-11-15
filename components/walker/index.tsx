@@ -12,9 +12,12 @@ const FRAMES = COLS * ROWS;
 // public/walker-still.png is a single 256px frame of him standing, aligned
 // the same way as the walk frames, shown whenever he isn't walking.
 
+// public/walker-held.png is a 4×2 grid of him flailing his arms, same frame
+// size and alignment as walker.png, shown while he's being carried.
+
 const SPEED = 70; // px per second
 const FPS = 10; // walk-cycle frames per second
-const HELD_FPS = FPS * 2; // legs flail twice as fast while he's held
+const HELD_FPS = FPS * 2; // he flails twice as fast while he's held
 const LIFT = 10; // px he rises when picked up
 const LIFT_EASE = 20; // how quickly he rises and settles (per second)
 const DROP_REST = 700; // ms he stands still after being dropped
@@ -26,14 +29,16 @@ export function Walker() {
   const ref = useRef<HTMLDivElement>(null);
   const spriteRef = useRef<HTMLDivElement>(null);
   const stillRef = useRef<HTMLDivElement>(null);
+  const heldRef = useRef<HTMLDivElement>(null);
   const shadowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = ref.current;
     const sprite = spriteRef.current;
     const still = stillRef.current;
+    const flail = heldRef.current;
     const shadow = shadowRef.current;
-    if (!el || !sprite || !still || !shadow) return;
+    if (!el || !sprite || !still || !flail || !shadow) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       el.style.display = "none";
       return;
@@ -135,13 +140,18 @@ export function Walker() {
         }
       }
 
-      const resting = now < restUntil;
-      sprite.style.visibility = resting ? "hidden" : "visible";
+      // Exactly one layer shows: flailing while held, standing while
+      // resting, walking otherwise.
+      const resting = !held && now < restUntil;
+      sprite.style.visibility = !held && !resting ? "visible" : "hidden";
       still.style.visibility = resting ? "visible" : "hidden";
+      flail.style.visibility = held ? "visible" : "hidden";
 
       const col = frame % COLS;
       const row = Math.floor(frame / COLS);
-      sprite.style.backgroundPosition = `${(col * 100) / (COLS - 1)}% ${(row * 100) / (ROWS - 1)}%`;
+      const framePos = `${(col * 100) / (COLS - 1)}% ${(row * 100) / (ROWS - 1)}%`;
+      sprite.style.backgroundPosition = framePos;
+      flail.style.backgroundPosition = framePos;
       // Ease up when picked up and back down when dropped; the shadow
       // stays put on the ground.
       lift += ((held ? LIFT : 0) - lift) * Math.min(1, LIFT_EASE * dt);
@@ -191,6 +201,15 @@ export function Walker() {
         className="absolute inset-0 bg-contain bg-no-repeat"
         style={{
           backgroundImage: "url(/walker-still.png)",
+          visibility: "hidden",
+        }}
+      />
+      <div
+        ref={heldRef}
+        className="absolute inset-0 bg-no-repeat"
+        style={{
+          backgroundImage: "url(/walker-held.png)",
+          backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
           visibility: "hidden",
         }}
       />
