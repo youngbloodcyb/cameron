@@ -17,7 +17,7 @@ export default function Home() {
             <h2>
               aka{" "}
               <Link
-                href="https://github.com/youngbloodcyb"
+                href="https://x.com/youngbloodcyb"
                 target="_blank"
                 className="underline"
               >
