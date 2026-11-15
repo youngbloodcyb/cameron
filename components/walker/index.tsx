@@ -184,8 +184,10 @@ export function Walker() {
       {/* Shown on the "ground" under his feet while he's lifted. */}
       <div
         ref={shadowRef}
-        className="absolute left-1/2 top-[94%] h-[10%] w-[60%] rounded-full bg-black/40 blur-[2px]"
-        style={{ opacity: 0 }}
+        // Color is inline: this project's Tailwind replaces `black` with
+        // Radix alpha shades, so `bg-black/40` generates no CSS.
+        className="absolute left-1/2 top-[94%] h-[10%] w-[60%] rounded-full blur-[2px]"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.4)", opacity: 0 }}
       />
       <div
         ref={spriteRef}
