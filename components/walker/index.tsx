@@ -18,8 +18,8 @@ const FRAMES = COLS * ROWS;
 const SPEED = 70; // px per second
 const FPS = 10; // walk-cycle frames per second
 const HELD_FPS = FPS * 2; // he flails twice as fast while he's held
-const LIFT = 10; // px he rises when picked up
-const LIFT_EASE = 20; // how quickly he rises and settles (per second)
+const LIFT = 16; // px he rises when picked up
+const LIFT_EASE = 10; // how quickly he rises and settles (per second)
 const DROP_REST = 700; // ms he stands still after being dropped
 const MAX_LEG = 400; // farthest px he walks before picking a new spot
 
@@ -75,7 +75,6 @@ export function Walker() {
       el.setPointerCapture(e.pointerId);
       held = { dx: e.clientX - pos.x, dy: e.clientY - pos.y };
       restUntil = 0;
-      shadow.style.opacity = "1";
       document.documentElement.classList.add("walker-held");
     };
 
@@ -92,7 +91,6 @@ export function Walker() {
       target = nextTarget(pos);
       // Stand still for a beat after landing before walking off.
       restUntil = performance.now() + DROP_REST;
-      shadow.style.opacity = "0";
       document.documentElement.classList.remove("walker-held");
     };
 
@@ -155,7 +153,11 @@ export function Walker() {
       // Ease up when picked up and back down when dropped; the shadow
       // stays put on the ground.
       lift += ((held ? LIFT : 0) - lift) * Math.min(1, LIFT_EASE * dt);
-      shadow.style.transform = `translateX(-50%) translateY(${lift}px)`;
+      // The shadow grows in as he leaves the ground and shrinks away as he
+      // lands, tracking how high he is.
+      const height = lift / LIFT;
+      shadow.style.opacity = `${height}`;
+      shadow.style.transform = `translateX(-50%) translateY(${lift}px) scale(${0.3 + 0.7 * height})`;
       el.style.transform = `translate3d(${pos.x}px, ${pos.y - lift}px, 0) scaleX(${facingRight ? 1 : -1})`;
 
       raf = requestAnimationFrame(tick);
@@ -182,7 +184,7 @@ export function Walker() {
       {/* Shown on the "ground" under his feet while he's lifted. */}
       <div
         ref={shadowRef}
-        className="absolute left-1/2 top-[98%] h-[8%] w-[45%] rounded-full bg-black/30 blur-[1px]"
+        className="absolute left-1/2 top-[94%] h-[10%] w-[60%] rounded-full bg-black/40 blur-[2px]"
         style={{ opacity: 0 }}
       />
       <div
